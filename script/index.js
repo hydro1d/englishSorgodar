@@ -12,13 +12,30 @@ const loadlevelword = (id) =>{
 
 const displaylevelword =(words)=>{
     const wordContainer = document.getElementById("word-container")
-   // wordContainer.innerHTML = "";
+    wordContainer.innerHTML = "";
+    if(words.length == 0){
+        wordContainer.innerHTML = `
+             <div class="text-center col-span-full rounded-xl py-8  space-y-6">
+             <img src="./assets/alert-error.png" class="mx-auto">
+        <p class="font-bangla text-xl font-medium text-gray-500">এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি।</p>
+        <h2 class="font-bangla font-bold text-3.5xl">নেক্সট Lesson এ যান</h2>
+     </div>
+        `;
+    }
 
     words.forEach( (word) => {
         console.log(word);
         const card = document.createElement("div");
         card.innerHTML = `
-        <p> catie </p>
+           <div class="bg-white rounded-xl shadow-md text-center py-12 px-5 space-y-4">
+            <h2 class="font-bold text-2xl">${word.word}</h2>
+            <p class="font-semibold ">Meaning/Pronounciation</p>
+            <div class="text-2xl font-medium font-bangla">${word.meaning}/${word.pronunciation}</div>
+            <div class="flex justify-between items-center">
+                <button class="btn bg-blue-300 opacity-70 hover:bg-blue-500 opacity-92"><i class="fa-solid fa-circle-info"></i></button>
+                <button class="btn bg-blue-300 opacity-70 hover:bg-blue-500 opacity-92"><i class="fa-solid fa-ear-listen"></i></button>
+            </div>
+        </div>
         `;
         wordContainer.append(card); 
     });
