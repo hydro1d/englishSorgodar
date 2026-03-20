@@ -3,11 +3,23 @@ const loadLessson = () => {
     .then((res)=> res.json())
     .then((json) => displayLesson(json.data))
 }
+
+const removeActive = () => {
+    const lessonButtons = document.querySelectorAll(".lesson-btn-active")
+    lessonButtons.forEach(btn=> btn.classList.remove("active")); 
+};
+
 const loadlevelword = (id) =>{
     const url = `https://openapi.programming-hero.com/api/level/${id}`
     fetch(url)
     .then((res)=> res.json())
-    .then((data)=> displaylevelword(data.data)) 
+    .then((data)=> {
+        removeActive();//remove all active class
+        const clickBtn = document.getElementById(`lesson-btn-${id}`)
+        //class jeta click kore ota tei thakbe active
+        clickBtn.classList.add("active")
+        displaylevelword(data.data)
+    }) 
 }
 
 const displaylevelword =(words)=>{
@@ -32,7 +44,7 @@ const displaylevelword =(words)=>{
             <p class="font-semibold ">Meaning/Pronounciation</p>
             <div class="text-2xl font-medium font-bangla">${word.meaning}/${word.pronunciation}</div>
             <div class="flex justify-between items-center">
-                <button class="btn bg-blue-300 opacity-70 hover:bg-blue-500 opacity-92"><i class="fa-solid fa-circle-info"></i></button>
+                <button onclick="my_modal_5.showModal()" class="btn bg-blue-300 opacity-70 hover:bg-blue-500 opacity-92"><i class="fa-solid fa-circle-info"></i></button>
                 <button class="btn bg-blue-300 opacity-70 hover:bg-blue-500 opacity-92"><i class="fa-solid fa-ear-listen"></i></button>
             </div>
         </div>
@@ -51,7 +63,7 @@ const displayLesson =(lessons)=>{
            //     3,create Element
            const btnDiv = document.createElement("div");
            btnDiv.innerHTML = `  
-                    <button onclick="loadlevelword(${lesson.level_no})" class="btn btn-outline btn-primary">
+                    <button id="lesson-btn-${lesson.level_no}" onclick="loadlevelword(${lesson.level_no})" class="btn btn-outline btn-primary lesson-btn-active">
                     <i class="fa-solid fa-book-open"></i>Lesson -${lesson.lessonName}
                     </button>
                  
